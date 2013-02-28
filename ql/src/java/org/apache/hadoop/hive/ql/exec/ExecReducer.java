@@ -144,6 +144,8 @@ public class ExecReducer extends MapReduceBase implements Reducer {
       throw new RuntimeException(e);
     }
 
+    MapredContext.init(false, new JobConf(jc));
+
     // initialize reduce operator tree
     try {
       l4j.info(reducer.dump(0));
@@ -178,6 +180,8 @@ public class ExecReducer extends MapReduceBase implements Reducer {
       rp = reporter;
       reducer.setOutputCollector(oc);
       reducer.setReporter(rp);
+      reducer.setOperatorHooks(opHooks);
+      MapredContext.get().setReporter(reporter);
     }
 
     try {
@@ -313,6 +317,8 @@ public class ExecReducer extends MapReduceBase implements Reducer {
         throw new RuntimeException("Hive Runtime Error while closing operators: "
             + e.getMessage(), e);
       }
+    } finally {
+      MapredContext.close();
     }
   }
 }
