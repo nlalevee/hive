@@ -18,7 +18,7 @@
 -->
 
 
-<project xmlns:ivy="antlib:org.apache.ivy.ant"
+<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ac="antlib:net.sf.antcontrib"
          xmlns:artifact="urn:maven-artifact-ant"
          name="hivecommon" default="jar">
 
@@ -123,7 +123,7 @@
 
   <loadproperties srcfile="${ivy.conf.dir}/libraries.properties"/>
 
-  <osfamily property="os.family"/>
+  <ac:osfamily property="os.family"/>
 
   <condition property="offline">
     <istrue value="${is-offline}"/>
