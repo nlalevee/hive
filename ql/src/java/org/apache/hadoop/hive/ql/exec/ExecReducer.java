@@ -111,6 +111,7 @@ public class ExecReducer extends MapReduceBase implements Reducer {
       l4j.info("cannot get classpath: " + e.getMessage());
     }
     jc = job;
+    UDFContext.addJobConf(jc);
     MapredWork gWork = Utilities.getMapRedWork(job);
     reducer = gWork.getReducer();
     reducer.setParentOperators(null); // clear out any parents as reducer is the
