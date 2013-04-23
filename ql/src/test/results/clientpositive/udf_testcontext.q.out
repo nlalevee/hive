@@ -1,0 +1,32 @@
+PREHOOK: query: -- Test to see if the UDFContext is properly initialized on the backend
+-- and if a UDF can obtain the JobConf using the UDFContext.
+
+CREATE TEMPORARY FUNCTION getconfprop AS 'org.apache.hadoop.hive.ql.udf.UDFGetConfProp'
+PREHOOK: type: CREATEFUNCTION
+POSTHOOK: query: -- Test to see if the UDFContext is properly initialized on the backend
+-- and if a UDF can obtain the JobConf using the UDFContext.
+
+CREATE TEMPORARY FUNCTION getconfprop AS 'org.apache.hadoop.hive.ql.udf.UDFGetConfProp'
+POSTHOOK: type: CREATEFUNCTION
+PREHOOK: query: select getconfprop('test.udfcontext.prop') FROM src LIMIT 10
+PREHOOK: type: QUERY
+PREHOOK: Input: default@src
+PREHOOK: Output: file:/var/folders/b7/b7UUwNZdF1KKHtM+5la6f++++TI/-Tmp-/carl/hive_2010-08-30_15-09-05_654_5544702033416876686/-mr-10000
+POSTHOOK: query: select getconfprop('test.udfcontext.prop') FROM src LIMIT 10
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@src
+POSTHOOK: Output: file:/var/folders/b7/b7UUwNZdF1KKHtM+5la6f++++TI/-Tmp-/carl/hive_2010-08-30_15-09-05_654_5544702033416876686/-mr-10000
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+"Can the UDF see this on the backend?"
+PREHOOK: query: DROP TEMPORARY FUNCTION getconfprop
+PREHOOK: type: DROPFUNCTION
+POSTHOOK: query: DROP TEMPORARY FUNCTION getconfprop
+POSTHOOK: type: DROPFUNCTION

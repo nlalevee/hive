@@ -82,6 +82,7 @@ public class ExecMapper extends MapReduceBase implements Mapper {
     try {
       jc = job;
       execContext.setJc(jc);
+      UDFContext.addJobConf(jc);
       // create map and fetch operators
       MapredWork mrwork = Utilities.getMapRedWork(job);
       mo = new MapOperator();
