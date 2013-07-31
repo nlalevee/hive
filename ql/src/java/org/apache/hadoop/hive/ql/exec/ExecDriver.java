@@ -136,6 +136,11 @@ public class ExecDriver extends Task<MapredWork> implements Serializable, Hadoop
 
     job = new JobConf(conf, ExecDriver.class);
 
+    if (conf.getBoolean("scoop-mapred.hack.no.mapred.jar", false)) {
+        // reset the mapred.jar which was set to be the hive-exec.jar
+        job.unset("mapred.jar");
+    }
+
     // NOTE: initialize is only called if it is in non-local mode.
     // In case it's in non-local mode, we need to move the SessionState files
     // and jars to jobConf.
