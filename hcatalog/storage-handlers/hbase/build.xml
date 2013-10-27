@@ -32,6 +32,7 @@
     <!-- name and version -->
     <property name="handler.version" value="0.1.0"/>
     <property name="handler.jar" value="${ant.project.name}-${handler.version}.jar"/>
+    <property name="handler.sources.jar" value="${ant.project.name}-sources-${handler.version}.jar"/>
     <property name="final.name" value="${ant.project.name}-${handler.version}" />
     <property name="hcatalog.dir" value="${basedir}/../.." />
 
@@ -107,6 +108,14 @@
             </fileset>
         </copy>
         <jar jarfile="${build.dir}/${handler.jar}" basedir="${build.classes}"/>
+    </target>
+
+    <target name="jar-sources" depends="init">
+      <jar jarfile="${build.dir}/${handler.sources.jar}">
+        <fileset dir="${src.dir}" />
+        <fileset dir="${basedir}/src/gen-java" />
+        <fileset dir="${basedir}/src/resources" />
+      </jar>
     </target>
 
     <!--

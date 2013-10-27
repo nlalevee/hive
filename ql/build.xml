@@ -335,6 +335,60 @@
                  artifactspattern="${build.dir}/${ivy.publish.pattern}"/>
   </target>
 
+  <target name="jar-sources" depends="init, ql-init, build-grammar">
+    <echo message="Project: ${ant.project.name}"/>
+
+    <mkdir dir="${build.dir}/dependencies-sources" />
+    <macrodef name="unzip-dependency-sources">
+      <attribute name="dir" />
+      <attribute name="module" />
+      <sequential>
+        <unzip src="${build.dir.hive}/@{dir}/@{module}-sources-${version}.jar" dest="${build.dir}/dependencies-sources">
+          <patternset>
+            <exclude name="META-INF"/>
+            <exclude name="META-INF/MANIFEST.MF"/>
+          </patternset>
+        </unzip>
+      </sequential>
+    </macrodef>
+    <unzip-dependency-sources dir="common" module="hive-common" />
+    <unzip-dependency-sources dir="serde" module="hive-serde" />
+
+    <!-- TODO: we may want to handle the sources of the retrieved dependencies too -->
+
+    <jar jarfile="${build.dir}/hive-exec-sources-${version}.jar" basedir="${src.dir}">
+      <fileset dir="${src.dir}" />
+      <fileset dir="${basedir}/src/gen/thrift/gen-javabean" />
+      <fileset dir="${build.dir}/gen/antlr/gen-java" />
+      <fileset dir="${protobuf.build.dir}" />
+      <fileset dir="${build.dir}/dependencies-sources" />
+      <manifest>
+        <!-- Not putting these in their own manifest section, since that inserts
+        a new-line, which breaks the reading of the attributes. -->
+        <attribute name="Implementation-Title" value="Hive"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="Apache"/>
+      </manifest>
+      <metainf dir="${hive.root}" includes="LICENSE,NOTICE"/>
+    </jar>
+
+    <jar jarfile="${build.dir}/hive-ql-sources-${version}.jar" basedir="${src.dir}">
+      <fileset dir="${src.dir}" />
+      <fileset dir="${basedir}/src/gen/thrift/gen-javabean" />
+      <fileset dir="${build.dir}/gen/antlr/gen-java" />
+      <fileset dir="${protobuf.build.dir}" />
+      <manifest>
+        <!-- Not putting these in their own manifest section, since that inserts
+        a new-line, which breaks the reading of the attributes. -->
+        <attribute name="Implementation-Title" value="Hive"/>
+        <attribute name="Implementation-Version" value="${version}"/>
+        <attribute name="Implementation-Vendor" value="Apache"/>
+      </manifest>
+      <metainf dir="${hive.root}" includes="LICENSE,NOTICE"/>
+    </jar>
+
+  </target>
+
   <!-- Override deploy since we are deploying hive_exec and not hive_ql -->
   <target name="deploy" depends="jar">
     <echo message="${ant.project.name}"/>

@@ -85,6 +85,27 @@
         </ant>
     </target>
 
+    <target name="jar-sources" depends="init" description="build all jars">
+        <ant target="jar-sources" dir="core" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+        <ant target="jar-sources" dir="hcatalog-pig-adapter" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+        <ant target="jar-sources" dir="server-extensions" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+        <ant target="jar-sources" dir="webhcat/svr" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+        <ant target="jar-sources" dir="webhcat/java-client" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+        <ant target="jar-sources" dir="storage-handlers/hbase" inheritAll="false">
+          <property name="_mvn.hadoop.profile" value="${mvn.hadoop.profile}"/>
+        </ant>
+    </target>
+
     <!--
     ================================================================================
     Test Section
